@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rectangles", "Rectangles", "{3C84125F-73C5-4411-A15F-6C57344B3413}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Multiples", "Multiples", "{8188FC18-7211-4B13-9FDD-E13074D62F6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multiples.Core", "Multiples\src\Multiples.Core\Multiples.Core.csproj", "{E28947C7-C4C9-4D8A-8A63-6E844E00BE19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multiples.Core.Tests", "Multiples\src\Multiples.Core.Tests\Multiples.Core.Tests.csproj", "{C6DC0910-CD5D-4EAF-BF9D-1D1531B5D538}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multiples.UI", "Multiples\src\Multiples.UI\Multiples.UI.csproj", "{57B7100A-7BBD-4D44-96BA-4D77D752C295}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C3CA7CAA-D887-4BA9-A004-C00CBDDE1C7C}"
+	ProjectSection(SolutionItems) = preProject
+		Multiples\src\Multiples of 2, 3 and 5.docx = Multiples\src\Multiples of 2, 3 and 5.docx
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E28947C7-C4C9-4D8A-8A63-6E844E00BE19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E28947C7-C4C9-4D8A-8A63-6E844E00BE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E28947C7-C4C9-4D8A-8A63-6E844E00BE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E28947C7-C4C9-4D8A-8A63-6E844E00BE19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6DC0910-CD5D-4EAF-BF9D-1D1531B5D538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6DC0910-CD5D-4EAF-BF9D-1D1531B5D538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6DC0910-CD5D-4EAF-BF9D-1D1531B5D538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6DC0910-CD5D-4EAF-BF9D-1D1531B5D538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57B7100A-7BBD-4D44-96BA-4D77D752C295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B7100A-7BBD-4D44-96BA-4D77D752C295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B7100A-7BBD-4D44-96BA-4D77D752C295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B7100A-7BBD-4D44-96BA-4D77D752C295}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E28947C7-C4C9-4D8A-8A63-6E844E00BE19} = {C3CA7CAA-D887-4BA9-A004-C00CBDDE1C7C}
+		{C6DC0910-CD5D-4EAF-BF9D-1D1531B5D538} = {C3CA7CAA-D887-4BA9-A004-C00CBDDE1C7C}
+		{57B7100A-7BBD-4D44-96BA-4D77D752C295} = {C3CA7CAA-D887-4BA9-A004-C00CBDDE1C7C}
+		{C3CA7CAA-D887-4BA9-A004-C00CBDDE1C7C} = {8188FC18-7211-4B13-9FDD-E13074D62F6D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {657EA421-EE34-45AF-9307-295A41653206}
+	EndGlobalSection
+EndGlobal
