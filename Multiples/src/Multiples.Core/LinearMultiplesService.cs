@@ -41,11 +41,6 @@ namespace SmokingGunInc.Multiples
             var factors = numbers.Select(n => new Factor(n)).ToArray();
             var multiples = new List<ulong>(position) { 1 };
 
-            var minFactor = MinByNumber(factors);
-            multiples.Add(minFactor.Number);
-
-            SetNextValue(minFactor, multiples);
-
             return (factors, multiples);
         }
 
@@ -59,19 +54,6 @@ namespace SmokingGunInc.Multiples
             }
 
             SetNextValue(minFactorValue, multiples);
-        }
-        private static Factor MinByNumber(IReadOnlyCollection<Factor> factors)
-        {
-            var minFactor = factors.First();
-            foreach (var factor in factors.Skip(1))
-            {
-                if (minFactor.Number > factor.Number)
-                {
-                    minFactor = factor;
-                }
-            }
-
-            return minFactor;
         }
         private static Factor MinByValue(IReadOnlyCollection<Factor> factors)
         {
