@@ -4,82 +4,26 @@
         <name>Multiples.Core</name>
     </assembly>
     <members>
-        <member name="T:SmokingGunInc.Multiples.Factor">
-            <summary>
-            Class that represents a factor to be used by <see cref="T:SmokingGunInc.Multiples.IMultiplesService"/>.
-            </summary>
-        </member>
-        <member name="P:SmokingGunInc.Multiples.Factor.Number">
-            <summary>
-            Specifies one of the factors to be considered for <see cref="T:SmokingGunInc.Multiples.IMultiplesService"/> calculations.
-            </summary>
-        </member>
-        <member name="M:SmokingGunInc.Multiples.Factor.#ctor(System.UInt64)">
-            <summary>
-            Creates a new instance of a <see cref="P:SmokingGunInc.Multiples.Factor.Number"/>.
-            </summary>
-            <param name="factor">
-            The value <see cref="P:SmokingGunInc.Multiples.Factor.Number"/> for this <see cref="T:SmokingGunInc.Multiples.Factor"/>. Must be greater than 1
-            </param>
-            <exception cref="T:System.ArgumentException">If <paramref name="factor"/> is smaller or equal than 1.</exception>
-        </member>
-        <member name="M:SmokingGunInc.Multiples.Factor.op_Implicit(System.UInt64)~SmokingGunInc.Multiples.Factor">
-            <summary>
-            Implicit operator to create a <see cref="T:SmokingGunInc.Multiples.Factor"/> from an <see cref="T:System.UInt64"/>.
-            </summary>
-            <param name="factor"></param>
-        </member>
-        <member name="M:SmokingGunInc.Multiples.Factor.ToFactor(System.UInt64)">
-            <summary>
-            Converts an <see cref="T:System.UInt64"/> into a <see cref="T:SmokingGunInc.Multiples.Factor"/>.
-            </summary>
-            <param name="factor">The value to be converted to a <see cref="T:SmokingGunInc.Multiples.Factor"/>.</param>
-            <returns>A <see cref="T:SmokingGunInc.Multiples.Factor"/> with <see cref="P:SmokingGunInc.Multiples.Factor.Number"/> equals to <paramref name="factor"/>.</returns>
-        </member>
-        <member name="M:SmokingGunInc.Multiples.Factor.CompareTo(SmokingGunInc.Multiples.Factor)">
-            <summary>
-            Compares this <see cref="T:SmokingGunInc.Multiples.Factor"/> to <paramref name="other"/> using their <see cref="P:SmokingGunInc.Multiples.Factor.Number"/> properties as reference.
-            </summary>
-            <param name="other">The other <see cref="T:SmokingGunInc.Multiples.Factor"/> to compare this <see cref="T:SmokingGunInc.Multiples.Factor"/> to.</param>
-            <returns>
-            <code>0</code> if both <see cref="T:SmokingGunInc.Multiples.Factor"/> are the same.
-            A number greater than 0 if this <see cref="T:SmokingGunInc.Multiples.Factor"/> is greater than <paramref name="other"/>.
-            A number smaller than 0 if this <see cref="T:SmokingGunInc.Multiples.Factor"/> is smaller than <paramref name="other"/>.
-            </returns>
-        </member>
         <member name="T:SmokingGunInc.Multiples.IMultiplesService">
             <summary>
             Service to determine the multiple of factors following different criteria.
             </summary>
         </member>
-        <member name="P:SmokingGunInc.Multiples.IMultiplesService.Factors">
+        <member name="M:SmokingGunInc.Multiples.IMultiplesService.DetermineMultiple(System.Int32,System.UInt64[])">
             <summary>
-            Collection of <see cref="T:SmokingGunInc.Multiples.Factor"/> used by <see cref="T:SmokingGunInc.Multiples.IMultiplesService"/> for its computations.
-            </summary>
-        </member>
-        <member name="M:SmokingGunInc.Multiples.IMultiplesService.DetermineMultiple(System.UInt16)">
-            <summary>
-            Determines the number in the position <paramref name="position"/> in the sorted list of numbers in the form <code>n = F1^f1 * F2^f2 * ... * Fn^fn</code>
-            where <code>Fi</code> is an element of <see cref="P:SmokingGunInc.Multiples.IMultiplesService.Factors"/> and <code>fi</code> is an integer greater or equal to 0.
+            Determines the number on the given <paramref name="position"/> in the sorted list of numbers in the form <code>n = F1^f1 * F2^f2 * ... * Fn^fn</code>
+            where <code>Fi</code> is an element of <paramref name="numbers"/> and <code>fi</code> is an integer greater or equal to 0.
             </summary>
             <param name="position">The position in the list of the number to be calculated. <paramref name="position"/> must be between 1 and 13282 inclusive.</param>
+            <param name="numbers">Collection of factors to use for the computation</param>
             <returns>The value of the number in the list that takes the position <paramref name="position"/>.</returns>
         </member>
         <member name="T:SmokingGunInc.Multiples.LinearMultiplesService">
             <summary>
-            Implementation of <see cref="T:SmokingGunInc.Multiples.IMultiplesService"/> that provides a linear implementation of <see cref="M:SmokingGunInc.Multiples.LinearMultiplesService.DetermineMultiple(System.UInt16)"/>.
+            Implementation of <see cref="T:SmokingGunInc.Multiples.IMultiplesService"/> that provides a linear implementation of <see cref="M:SmokingGunInc.Multiples.LinearMultiplesService.DetermineMultiple(System.Int32,System.UInt64[])"/>/>.
             </summary>
         </member>
-        <member name="P:SmokingGunInc.Multiples.LinearMultiplesService.Factors">
-            <inheritdoc />
-        </member>
-        <member name="M:SmokingGunInc.Multiples.LinearMultiplesService.#ctor(SmokingGunInc.Multiples.Factor[])">
-            <summary>
-            Creates a new instance of <see cref="T:SmokingGunInc.Multiples.LinearMultiplesService"/>
-            </summary>
-            <param name="factors"></param>
-        </member>
-        <member name="M:SmokingGunInc.Multiples.LinearMultiplesService.DetermineMultiple(System.UInt16)">
+        <member name="M:SmokingGunInc.Multiples.LinearMultiplesService.DetermineMultiple(System.Int32,System.UInt64[])">
             <inheritdoc />
         </member>
     </members>

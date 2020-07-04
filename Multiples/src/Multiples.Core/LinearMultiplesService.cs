@@ -5,98 +5,91 @@ using System.Linq;
 namespace SmokingGunInc.Multiples
 {
     /// <summary>
-    /// Implementation of <see cref="IMultiplesService"/> that provides a linear implementation of <see cref="DetermineMultiple(ushort)"/>.
+    /// Implementation of <see cref="IMultiplesService"/> that provides a linear implementation of <see cref="DetermineMultiple(int, ulong[])"/>/>.
     /// </summary>
     public class LinearMultiplesService : IMultiplesService
     {
         /// <inheritdoc />
-        public IReadOnlyCollection<Factor> Factors { get; private set; }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="LinearMultiplesService"/>
-        /// </summary>
-        /// <param name="factors"></param>
-        public LinearMultiplesService(params Factor[] factors)
+        public ulong DetermineMultiple(int position, params ulong[] numbers)
         {
-            if (factors.Length == 0)
+            var (factors, multiples) = InitializeService(numbers, position);
+
+            while (multiples.Count < position)
             {
-                throw new ArgumentException("Argument cannot be an empty collection.", nameof(factors));
+                CalculateNextFactor(factors, multiples);
             }
 
-            Factors = factors;
+            return multiples[position - 1];
         }
-
-        /// <inheritdoc />
-        public ulong DetermineMultiple(ushort position)
+        private static (IReadOnlyCollection<Factor> factors, IList<ulong> multiples) InitializeService(ulong[] numbers, int position)
         {
-            ValidatePositionParameter(position);
-
-            var calculatedFactors = new List<ulong>(position) { 1 };
-            InitializeFactors(calculatedFactors);
-
-            while (calculatedFactors.Count < position)
+            if (numbers.Length == 0)
             {
-                CalculateNextFactor(calculatedFactors);
+                throw new ArgumentException("Argument cannot be an empty collection", nameof(numbers));
             }
 
-            return calculatedFactors[position - 1];
-        }
-        private void InitializeFactors(IList<ulong> calculatedFactors)
-        {
-            Factors = Factors.Select(f => new Factor(f.Number)).ToArray();
-
-            var minFactor = Factors.Min();
-            calculatedFactors.Add(minFactor.Number);
-
-            SetNextValue(minFactor, calculatedFactors);
-        }
-
-        private static void ValidatePositionParameter(ushort position)
-        {
-            if (position == 0)
+            if (numbers.Any(n => n <= 1))
             {
-                throw new ArgumentException("Argument must not be 0", nameof(position));
+                throw new ArgumentException("Every provided number argument must be greater than \"1\"", nameof(numbers));
             }
+
+            if (position <= 0)
+            {
+                throw new ArgumentException("Argument must be greater than 0", nameof(position));
+            }
+
+            var factors = numbers.Select(n => new Factor(n)).ToArray();
+            var multiples = new List<ulong>(position) { 1 };
+
+            var minFactor = MinByNumber(factors);
+            multiples.Add(minFactor.Number);
+
+            SetNextValue(minFactor, multiples);
+
+            return (factors, multiples);
         }
 
-        private void CalculateNextFactor(IList<ulong> calculatedFactors)
+        private static void CalculateNextFactor(IReadOnlyCollection<Factor> factors, IList<ulong> multiples)
         {
-            var minFactorValue = MinFactorValue();
+            var minFactorValue = MinByValue(factors);
             var nextValue = minFactorValue.NextValue;
-            if (nextValue > calculatedFactors[^1])
+            if (nextValue > multiples[^1])
             {
-                calculatedFactors.Add(nextValue);
+                multiples.Add(nextValue);
             }
 
-            SetNextValue(minFactorValue, calculatedFactors);
+            SetNextValue(minFactorValue, multiples);
         }
-        private Factor MinFactorValue()
+        private static Factor MinByNumber(IReadOnlyCollection<Factor> factors)
         {
-            var minFactorValue = Factors.First();
-            foreach (var factor in Factors.Skip(1))
+            var minFactor = factors.First();
+            foreach (var factor in factors.Skip(1))
             {
-                if (minFactorValue.NextValue > factor.NextValue)
+                if (minFactor.Number > factor.Number)
                 {
-                    minFactorValue = factor;
+                    minFactor = factor;
                 }
             }
 
-            return minFactorValue;
+            return minFactor;
         }
-        private static void SetNextValue(Factor factor, IList<ulong> calculatedFactors)
+        private static Factor MinByValue(IReadOnlyCollection<Factor> factors)
         {
-            // If NextIndex is 0 then NextValue == Number, meaning the factor itself was just added to the list.
-            //  Its NextValue always is Number^2.
-            if (factor.NextIndex == 0)
+            var minValue = factors.First();
+            foreach (var factor in factors.Skip(1))
             {
-                factor.NextIndex = calculatedFactors.Count - 1;
-            }
-            else
-            {
-                factor.NextIndex++;
+                if (minValue.NextValue > factor.NextValue)
+                {
+                    minValue = factor;
+                }
             }
 
-            factor.NextValue = factor.Number * calculatedFactors[factor.NextIndex];
+            return minValue;
+        }
+        private static void SetNextValue(Factor factor, IList<ulong> multiples)
+        {
+            factor.NextIndex++;
+            factor.NextValue = factor.Number * multiples[factor.NextIndex];
         }
     }
 }

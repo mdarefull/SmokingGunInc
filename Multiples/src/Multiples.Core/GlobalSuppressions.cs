@@ -4,9 +4,5 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Multiples.Core.Tests")]
-
-[assembly: SuppressMessage("Design", "CA1036:Override methods on comparable types", Justification = "Not Required at this moment", Scope = "type", Target = "~T:SmokingGunInc.Multiples.Factor")]
 [assembly: SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "Exceptions Message", Scope = "type", Target = "~T:SmokingGunInc.Multiples.LinearMultiplesService")]

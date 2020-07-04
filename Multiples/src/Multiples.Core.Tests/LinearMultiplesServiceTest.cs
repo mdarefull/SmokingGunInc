@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 
 using System;
-using System.Linq;
 
 using Xunit;
 
@@ -9,29 +8,6 @@ namespace SmokingGunInc.Multiples
 {
     public class LinearMultiplesServiceTest
     {
-        [Fact]
-        public void Constructor_InstantiatesService()
-        {
-            // Arrange
-            var factors = new[] { new Factor(3), new Factor(5), new Factor(2) };
-
-            // Act
-            var subject = new LinearMultiplesService(factors);
-
-            // Assert
-            subject.Factors.Should().BeEquivalentTo(factors);
-        }
-
-        [Fact]
-        public void Constructor_NoFactors_ArgumentException()
-        {
-            // Arrange
-            LinearMultiplesService instantiation() => new LinearMultiplesService();
-
-            // Assert
-            Assert.Throws<ArgumentException>("factors", instantiation);
-        }
-
         [Theory]
         [InlineData(1, 1, 2ul, 3ul, 5ul)]
         [InlineData(2, 2, 2ul, 3ul, 5ul)]
@@ -60,26 +36,62 @@ namespace SmokingGunInc.Multiples
         public void DetermineMultiple_ReturnsExpected(ushort position, ulong expectedResult, params ulong[] numbers)
         {
             // Arrange
-            var factors = numbers.Select(n => new Factor(n)).ToArray();
-            var subject = new LinearMultiplesService(factors);
+            var subject = new LinearMultiplesService();
 
             // Act
-            var result = subject.DetermineMultiple(position);
+            var result = subject.DetermineMultiple(position, numbers);
 
             // Assert
             result.Should().Be(expectedResult);
         }
 
-        [Fact]
-        public void DetermineMultiple_PositionEquals0_ArgumentException()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        [InlineData(-100)]
+        public void DetermineMultiple_InvalidPosition_ArgumentException(int position)
         {
             // Arrange
-            var subject = new LinearMultiplesService(2, 3, 5);
+            var subject = new LinearMultiplesService();
 
-            void invocation() => subject.DetermineMultiple(0);
+            // Act & Assert
+            subject
+                .Invoking(s => s.DetermineMultiple(position, 2))
+                .Should()
+                .ThrowExactly<ArgumentException>()
+                .WithMessage("Argument must be greater than 0 (Parameter 'position')");
+        }
 
-            // Assert
-            Assert.Throws<ArgumentException>("position", invocation);
+        [Fact]
+        public void DetermineMultiple_EmptyNumbersList_ArgumentException()
+        {
+            // Arrange
+            var subject = new LinearMultiplesService();
+
+            // Act & Assert
+            subject
+                .Invoking(s => s.DetermineMultiple(2))
+                .Should()
+                .ThrowExactly<ArgumentException>()
+                .WithMessage("Argument cannot be an empty collection (Parameter 'numbers')");
+        }
+
+        [Theory]
+        [InlineData(0ul)]
+        [InlineData(1ul)]
+        [InlineData(2ul, 3ul, 0ul)]
+        [InlineData(2ul, 5ul, 1ul)]
+        public void DetermineMultiple_InvalidNumbers_ArgumentException(params ulong[] numbers)
+        {
+            // Arrange
+            var subject = new LinearMultiplesService();
+
+            // Act & Assert
+            subject
+                .Invoking(s => s.DetermineMultiple(2, numbers))
+                .Should()
+                .ThrowExactly<ArgumentException>()
+                .WithMessage("Every provided number argument must be greater than \"1\" (Parameter 'numbers')");
         }
     }
 }

@@ -25,7 +25,7 @@ namespace SmokingGunInc.Multiples
                         continue;
                     }
 
-                    var result = service.DetermineMultiple(position);
+                    var result = service.DetermineMultiple(position, 2, 3, 5);
                     Console.WriteLine($"The multiple in position \"{position}\" is \"{result}\"");
                 }
                 catch (Exception)
@@ -35,6 +35,6 @@ namespace SmokingGunInc.Multiples
             }
         }
 
-        private static IMultiplesService InstantiateService() => new LinearMultiplesService(2, 3, 5);
+        private static IMultiplesService InstantiateService() => new LinearMultiplesService();
     }
 }
